@@ -2,14 +2,15 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
+import env from './enviornment';
 
 var config = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    databaseURL: process.env.DATABASE_URL,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESSAGING_SENDER_ID
+    apiKey: env.FIREBASE_API_KEY,
+    authDomain: env.AUTH_DOMAIN,
+    databaseURL: env.DATABASE_URL,
+    projectId: env.PROJECT_ID,
+    storageBucket: env.STORAGE_BUCKET,
+    messagingSenderId: env.MESSAGING_SENDER_ID
 };
 firebase.initializeApp(config);
 
