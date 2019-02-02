@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
-import env from './enviornment';
+import env from './env';
 
 var config = {
     apiKey: env.FIREBASE_API_KEY,

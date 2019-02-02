@@ -12,7 +12,8 @@ const Input = props => {
                         margin: 10px 0px;
                     }
                     .input input {
-                        border: 1px solid ${gray(100)};
+                        height: 30px;
+                        border: 1px solid ${gray(75)};
                         padding: 5px 2px;
                         border-radius: 2px;
                         width: 100%;

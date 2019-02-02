@@ -5,11 +5,6 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faStroopwafel} from '@fortawesome/free-solid-svg-icons';
-
-library.add(faStroopwafel);
 import './style.css';
 
 // stateless functional component

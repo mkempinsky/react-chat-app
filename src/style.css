@@ -1,9 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Marvel');
-@import url('https://fonts.googleapis.com/css?family=Nixie+One');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
 
+body {
+    margin: 0;
+}
 h1,
 h2 {
-    font-family: 'Nixie One', cursive;
+    font-family: 'Poppins', sans-serif;
 }
 
 p,
@@ -11,9 +13,17 @@ span,
 label,
 button,
 input {
-    font-family: 'Marvel', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 button {
     font-size: 18px;
+}
+
+.app {
+    height: 100vh;
+}
+
+.error-message {
+    color: #cc0000;
 }
