@@ -51,6 +51,13 @@ const Button = props => {
                         -webkit-transition: all 0.4s ease-in-out;
                         transition: all 0.4s ease-in-out;
                     }
+                    .button:disabled:hover {
+                        background-position: center;
+                        -webkit-transition-property: none;
+                        -moz-transition-property: none;
+                        -o-transition-property: none;
+                        transition-property: none;
+                    }
 
                     .button:focus {
                         outline: none;

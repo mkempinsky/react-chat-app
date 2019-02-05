@@ -9,7 +9,8 @@ import {MaxWidth} from '../MaxWIdth';
 import {Link} from 'react-router-dom';
 import firebase from '../../firebase';
 import {isFormEmpty, isUsernameValid} from '../../lib/utils';
-import Loading from '../Loading';
+import md5 from 'md5';
+import LoadingSvg from '../Svgs/loading';
 
 class Register extends React.Component {
     state = {
@@ -18,7 +19,9 @@ class Register extends React.Component {
             email: '',
             password: '',
             passwordConfirm: ''
-        }
+        },
+        loading: false,
+        usersRef: firebase.database().ref('users')
     };
     isFormValid = () => {
         const {password, passwordConfirm} = this.state.formData;
@@ -58,6 +61,9 @@ class Register extends React.Component {
         if (!this.isFormValid()) {
             return;
         }
+        this.setState({
+            loading: true
+        });
         firebase
             .auth()
             .createUserWithEmailAndPassword(
@@ -65,14 +71,51 @@ class Register extends React.Component {
                 this.state.formData.password
             )
             .then(createdUser => {
-                console.log('user', createdUser);
+                createdUser.user
+                    .updateProfile({
+                        displayName: this.state.formData.username,
+                        photoURL: `http://gravatar.com/avatar/${md5(
+                            createdUser.user.email
+                        )}?d=identicon`
+                    })
+                    .then(() => {
+                        this.saveUser(createdUser).then(() => {
+                            console.log('user saved');
+                        });
+                    })
+                    .then(() => {
+                        this.setState({
+                            loading: false,
+                            formData: {
+                                username: '',
+                                email: '',
+                                password: '',
+                                passwordConfirm: ''
+                            }
+                        });
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        this.setState({
+                            error: e.message,
+                            loading: false
+                        });
+                    });
             })
             .catch(e => {
                 this.setState(prevState => ({
                     ...prevState,
-                    error: e.message
+                    error: e.message,
+                    loading: false
                 }));
             });
+    };
+
+    saveUser = createdUser => {
+        return this.state.usersRef.child(createdUser.user.uid).set({
+            name: createdUser.user.displayName,
+            avatar: createdUser.user.photoURL
+        });
     };
 
     render() {
@@ -85,7 +128,6 @@ class Register extends React.Component {
                         {this.state.error && (
                             <p className="error-message">{this.state.error}</p>
                         )}
-                        <Loading />
                         <Form onSubmit={this.handleSubmit}>
                             <FlexContainer>
                                 <Input
@@ -125,8 +167,9 @@ class Register extends React.Component {
                                 <Button
                                     style={{marginTop: '20px'}}
                                     type="submit"
-                                    theme="green">
-                                    Sign Up
+                                    theme="green"
+                                    disabled={this.state.loading}>
+                                    {this.state.loading ? <LoadingSvg /> : 'Sign Up'}
                                 </Button>
                             </FlexContainer>
                         </Form>
