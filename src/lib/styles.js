@@ -13,6 +13,7 @@ export const gray = shade => {
 export const gradient = shade => {
     const shades = {
         100: '#25aae1, #40e495, #30dd8a, #2bb673', // blue-green
+        150: '#92d4f0, #a9ddf3, #bfe5f6, #d4eef9, #e9f6fc', // light-blue
         200: '#25aae1, #4481eb, #04befe, #3f86ed', // blue
         300: '#0ba360, #3cba92, #30dd8a, #2bb67a', // green
         400: '#667eea, #764ba2, #6B8DD6, #8E37D7', // purple

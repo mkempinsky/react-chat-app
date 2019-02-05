@@ -1,8 +1,15 @@
 import React from 'react';
+import Layout from '../Layout';
 
 class Login extends React.Component {
     render() {
-        return <div>Login</div>;
+        return (
+            <div>
+                <Layout>
+                    <div>Login</div>
+                </Layout>
+            </div>
+        );
     }
 }
 
