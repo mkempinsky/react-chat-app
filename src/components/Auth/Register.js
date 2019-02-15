@@ -23,7 +23,8 @@ class Register extends React.Component {
             passwordConfirm: ''
         },
         loading: false,
-        usersRef: firebase.database().ref('users')
+        usersRef: firebase.database().ref('users'),
+        isSuccessful: null
     };
     isFormValid = () => {
         const {password, passwordConfirm} = this.state.formData;
@@ -93,7 +94,8 @@ class Register extends React.Component {
                                 email: '',
                                 password: '',
                                 passwordConfirm: ''
-                            }
+                            },
+                            isSuccessful: true
                         });
                     })
                     .catch(e => {
@@ -127,60 +129,84 @@ class Register extends React.Component {
                 <div className="app register">
                     <MaxWidth>
                         <ChatIcon />
-                        <Card style={{backgroundColor: '#fff'}}>
-                            <h2 style={{color: gray(300)}}>Register for Chat</h2>
-                            {this.state.error && (
-                                <p className="error-message">{this.state.error}</p>
-                            )}
-                            <Form onSubmit={this.handleSubmit}>
-                                <FlexContainer>
-                                    <Input
-                                        name="username"
-                                        type="text"
-                                        placeholder="chatterbox"
-                                        label="Username"
-                                        value={username}
-                                        onChange={this.handleChange}
-                                    />
-                                    <Input
-                                        name="email"
-                                        type="text"
-                                        placeholder="chatter@mail.com"
-                                        label="Email"
-                                        value={email}
-                                        onChange={this.handleChange}
-                                    />
-                                    <Input
-                                        name="password"
-                                        type="password"
-                                        placeholder="password"
-                                        label="Password"
-                                        value={password}
-                                        onChange={this.handleChange}
-                                    />
-                                    <Input
-                                        name="passwordConfirm"
-                                        type="password"
-                                        placeholder="password"
-                                        label="Confirm Password"
-                                        value={passwordConfirm}
-                                        onChange={this.handleChange}
-                                    />
-                                </FlexContainer>
-                                <FlexContainer>
-                                    <Button
-                                        style={{marginTop: '20px'}}
-                                        type="submit"
-                                        theme="green"
-                                        disabled={this.state.loading}>
-                                        {this.state.loading ? <LoadingSvg /> : 'Sign Up'}
-                                    </Button>
-                                </FlexContainer>
-                            </Form>
-                            <p style={{textAlign: 'center', fontSize: '12px'}}>
-                                Already a user? <Link to="/login">Login</Link>
-                            </p>
-                        </Card>
+                        {!this.state.isSuccessful && (
+                            <Card style={{backgroundColor: '#fff'}}>
+                                <h2 style={{color: gray(300)}}>Register for Chat</h2>
+                                {this.state.error && (
+                                    <p className="error-message">{this.state.error}</p>
+                                )}
+                                <Form onSubmit={this.handleSubmit}>
+                                    <FlexContainer>
+                                        <Input
+                                            name="username"
+                                            type="text"
+                                            placeholder="chatterbox"
+                                            label="Username"
+                                            value={username}
+                                            onChange={this.handleChange}
+                                        />
+                                        <Input
+                                            name="email"
+                                            type="text"
+                                            placeholder="chatter@mail.com"
+                                            label="Email"
+                                            value={email}
+                                            onChange={this.handleChange}
+                                        />
+                                        <Input
+                                            name="password"
+                                            type="password"
+                                            placeholder="password"
+                                            label="Password"
+                                            value={password}
+                                            onChange={this.handleChange}
+                                        />
+                                        <Input
+                                            name="passwordConfirm"
+                                            type="password"
+                                            placeholder="password"
+                                            label="Confirm Password"
+                                            value={passwordConfirm}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FlexContainer>
+                                    <FlexContainer>
+                                        <Button
+                                            style={{marginTop: '20px'}}
+                                            type="submit"
+                                            theme="green"
+                                            disabled={this.state.loading}>
+                                            {this.state.loading ? (
+                                                <LoadingSvg />
+                                            ) : (
+                                                'Sign Up'
+                                            )}
+                                        </Button>
+                                    </FlexContainer>
+                                </Form>
+
+                                <p style={{textAlign: 'center', fontSize: '12px'}}>
+                                    Already a user? <Link to="/login">Login</Link>
+                                </p>
+                            </Card>
+                        )}
+                        {this.state.isSuccessful && (
+                            <Card style={{background: '#fff'}}>
+                                <div>
+                                    <h2>Success! You are now registered for chat.</h2>
+                                    <Link to="/login" style={{textDecoration: 'none'}}>
+                                        <Button
+                                            style={{
+                                                margin: '20px auto',
+                                                display: 'block'
+                                            }}
+                                            theme="green">
+                                            Login Now
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </Card>
+                        )}
                     </MaxWidth>
                     <style jsx="true">
                         {`
@@ -189,7 +215,7 @@ class Register extends React.Component {
                                 align-items: center;
                                 background-image: linear-gradient(
                                     to left top,
-                                    ${gradient(150)}
+                                    ${gradient(300)}
                                 );
                             }
                         `}
